@@ -37,7 +37,8 @@ const About2 = (props) => {
                                                 <li><i className="fa fa-star" aria-hidden="true"></i></li>
                                                 <li><i className="fa fa-star" aria-hidden="true"></i></li>
                                                 <li><i className="fa fa-star" aria-hidden="true"></i></li>
-                                                <li><span><i className="fa fa-star" aria-hidden="true"></i></span></li>
+                                                <li><span><i className="fa fa-star" aria-hidden="true"></i>
+                                                </span></li>
                                             </ul>
                                         </div>
                                         <div className="about-info-right">
@@ -45,7 +46,8 @@ const About2 = (props) => {
                                             <h3>$2500</h3>
                                         </div>
                                     </div>
-                                    <Link className="theme-btn" onClick={ClickHandler} to='/search-result'>Book Now</Link>
+                                    <Link className="theme-btn" onClick={ClickHandler} to='/search-result'>
+                                    Book Now</Link>
                                 </div>
                             </div>
                         </div>
