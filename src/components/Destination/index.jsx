@@ -14,7 +14,8 @@ const Destination = (props) => {
     return (
         <div className={`wpo-destination-area ${props.dClass}`}>
             <div className="container">
-                <SectionTitle MainTitle={'Our Most Populer Destination'} link={'/destination'}/>
+                <SectionTitle MainTitle={'Our Most Populer Destination'}
+                link={'/destination'} />
                 <div className="destination-wrap">
                     <div className="row">
                         {Destinations.slice(0, 3).map((destination, ditem) => (
@@ -34,7 +35,8 @@ const Destination = (props) => {
                                                     <li><i className="fa fa-star" aria-hidden="true"></i></li>
                                                     <li><i className="fa fa-star" aria-hidden="true"></i></li>
                                                     <li><i className="fa fa-star" aria-hidden="true"></i></li>
-                                                    <li><span><i className="fa fa-star" aria-hidden="true"></i></span></li>
+                                                    <li><span><i className="fa fa-star" aria-hidden="true"></i>
+                                                    </span></li>
                                                 </ul>
                                                 <small>4.5</small>
                                             </div>
