@@ -12,7 +12,8 @@ const About = (props) => {
             <div className="container-fluid">
                 <div className="wpo-about-section-wrapper">
                     <div className="row align-items-center">
-                        <div className="col-xl-5 col-lg-6 col-md-8 col-12 offset-xl-6 offset-lg-4 offset-md-2">
+                        <div className="col-xl-5 col-lg-6 col-md-8 col-12 offset-xl-6 offset-lg-4 
+                        offset-md-2">
                             <div className="wpo-about-content">
                                 <div className="about-title">
                                     <span>Exclusive Offer</span>
@@ -27,7 +28,8 @@ const About = (props) => {
                                                 <li><i className="fa fa-star" aria-hidden="true"></i></li>
                                                 <li><i className="fa fa-star" aria-hidden="true"></i></li>
                                                 <li><i className="fa fa-star" aria-hidden="true"></i></li>
-                                                <li><span><i className="fa fa-star" aria-hidden="true"></i></span></li>
+                                                <li><span><i className="fa fa-star" aria-hidden="true"></i>
+                                                </span></li>
                                             </ul>
                                         </div>
                                         <div className="about-info-right">
