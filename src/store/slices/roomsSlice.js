@@ -4,6 +4,7 @@ import catalogSeed from "../../api/data.json";
 const normalized = catalogSeed.map((r) => ({
   ...r,
   id: Number(r.id),
+  archived: false,
 }));
 
 const maxId = normalized.reduce((m, r) => Math.max(m, Number(r.id)), 0);
@@ -22,6 +23,7 @@ const roomsSlice = createSlice({
       const id = state.nextId++;
       state.items.push({
         id,
+        archived: false,
         proImg: payload.proImg?.trim() || "/product/1.jpg",
         title: payload.title?.trim() || "New room",
         price: String(payload.price ?? "199"),
@@ -55,12 +57,36 @@ const roomsSlice = createSlice({
           patch.Children != null ? String(patch.Children) : prev.Children,
       };
     },
-    deleteRoom(state, action) {
+    /** Hide from public site; can be restored from admin. */
+    archiveRoom(state, action) {
+      const id = Number(action.payload);
+      const row = state.items.find((r) => Number(r.id) === id);
+      if (row) {
+        row.archived = true;
+        row.archivedAt = Date.now();
+      }
+    },
+    restoreRoom(state, action) {
+      const id = Number(action.payload);
+      const row = state.items.find((r) => Number(r.id) === id);
+      if (row) {
+        row.archived = false;
+        delete row.archivedAt;
+      }
+    },
+    /** Irreversible — only use after archive, from admin. */
+    purgeRoomPermanently(state, action) {
       const id = Number(action.payload);
       state.items = state.items.filter((r) => Number(r.id) !== id);
     },
   },
 });
 
-export const { addRoom, updateRoom, deleteRoom } = roomsSlice.actions;
+export const {
+  addRoom,
+  updateRoom,
+  archiveRoom,
+  restoreRoom,
+  purgeRoomPermanently,
+} = roomsSlice.actions;
 export default roomsSlice.reducer;

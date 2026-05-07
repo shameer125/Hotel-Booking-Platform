@@ -46,7 +46,7 @@ Stored locally with the app (not suitable for production).
 
 | Role | Email | Password |
 |------|-------|----------|
-| **Admin** | `admin@parador.com` | `admin123` |
+| **Admin** |  |
 | **Guest** | `client@parador.com` | `client123` |
 
 New accounts can be created on **Create account**; they receive the **client** role.

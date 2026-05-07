@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
   addRoom,
-  deleteRoom,
+  archiveRoom,
+  restoreRoom,
+  purgeRoomPermanently,
   updateRoom,
 } from "../../store/slices/roomsSlice";
 import {
@@ -115,6 +117,7 @@ export default function AdminDashboard() {
   const [form, setForm] = useState(emptyRoom());
   const [editingId, setEditingId] = useState(null);
   const [roomSearch, setRoomSearch] = useState("");
+  const [roomCatalogView, setRoomCatalogView] = useState("active");
 
   const [orderSearch, setOrderSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -176,17 +179,35 @@ export default function AdminDashboard() {
       .slice(0, 6);
   }, [orders]);
 
+  const activeRoomCount = useMemo(
+    () => rooms.filter((r) => !r.archived).length,
+    [rooms]
+  );
+  const archivedRoomCount = useMemo(
+    () => rooms.filter((r) => r.archived).length,
+    [rooms]
+  );
+
   const filteredRooms = useMemo(() => {
+    const base =
+      roomCatalogView === "active"
+        ? rooms.filter((r) => !r.archived)
+        : rooms.filter((r) => r.archived);
     const q = roomSearch.trim().toLowerCase();
-    if (!q) return rooms;
-    return rooms.filter((r) => (r.title ?? "").toLowerCase().includes(q));
-  }, [rooms, roomSearch]);
+    if (!q) return base;
+    return base.filter((r) => (r.title ?? "").toLowerCase().includes(q));
+  }, [rooms, roomSearch, roomCatalogView]);
 
   const avgRoomRate = useMemo(() => {
-    if (!filteredRooms.length) return 0;
-    const sum = filteredRooms.reduce((s, r) => s + Number(r.price), 0);
-    return Math.round((sum / filteredRooms.length) * 100) / 100;
-  }, [filteredRooms]);
+    const base = rooms.filter((r) => !r.archived);
+    const q = roomSearch.trim().toLowerCase();
+    const list = !q
+      ? base
+      : base.filter((r) => (r.title ?? "").toLowerCase().includes(q));
+    if (!list.length) return 0;
+    const sum = list.reduce((s, r) => s + Number(r.price), 0);
+    return Math.round((sum / list.length) * 100) / 100;
+  }, [rooms, roomSearch]);
 
   const filteredOrders = useMemo(() => {
     let list = [...orders];
@@ -265,11 +286,41 @@ export default function AdminDashboard() {
     resetForm();
   };
 
-  const removeRoom = (id) => {
-    if (!window.confirm("Delete this room from the catalog?")) return;
-    dispatch(deleteRoom(id));
-    toast.info("Room removed.");
+  const archiveRoomFromCatalog = (id, title) => {
+    if (
+      !window.confirm(
+        `Archive “${title}”? It will be hidden from the public site but you can restore it from the Archived tab.`
+      )
+    )
+      return;
+    dispatch(archiveRoom(id));
+    toast.success("Room archived — no longer visible to guests.");
     if (editingId === id) resetForm();
+  };
+
+  const restoreRoomToCatalog = (id) => {
+    dispatch(restoreRoom(id));
+    toast.success("Room restored to the live catalog.");
+    if (editingId === id) resetForm();
+  };
+
+  const permanentlyRemoveRoom = (r) => {
+    const typed = window.prompt(
+      `Permanent delete: type the room title exactly:\n\n${r.title}`
+    );
+    if (typed !== r.title) {
+      if (typed != null) toast.error("Title did not match — nothing deleted.");
+      return;
+    }
+    if (
+      !window.confirm(
+        "This permanently removes the room from your data. Continue?"
+      )
+    )
+      return;
+    dispatch(purgeRoomPermanently(r.id));
+    toast.info("Room permanently removed.");
+    if (editingId === r.id) resetForm();
   };
 
   const removeOrder = (id) => {
@@ -488,19 +539,30 @@ export default function AdminDashboard() {
 
         {tab === "rooms" && (
           <div className="grid gap-8 lg:grid-cols-2">
+            <div className="lg:col-span-2 rounded-xl border border-amber-200 bg-amber-50/90 px-4 py-3 text-sm text-amber-950">
+              <strong className="font-semibold">Safety:</strong> Removing a
+              listing uses <strong>Archive</strong> (guests no longer see it;
+              you can <strong>Restore</strong>). <strong>Purge</strong> only
+              appears for archived rows and requires typing the room title.
+              For public demos, set custom logins via{" "}
+              <code className="rounded bg-white/80 px-1">.env</code> and see
+              README — avoid shipping default admin passwords.
+            </div>
             <div className="flex flex-col gap-4">
               <div className="rounded-2xl border border-teal-200 bg-gradient-to-br from-teal-50 to-white p-4 shadow-sm">
                 <p className="text-xs font-semibold uppercase text-teal-800">
                   Catalog snapshot
                 </p>
                 <p className="mt-1 text-2xl font-bold text-slate-900">
-                  {filteredRooms.length}{" "}
+                  {activeRoomCount} live
                   <span className="text-base font-normal text-slate-600">
-                    rooms match
+                    {" "}
+                    · {archivedRoomCount} archived
                   </span>
                 </p>
                 <p className="text-sm text-slate-600">
-                  Avg. rate: ${formatMoney(avgRoomRate)} / night
+                  Avg. live rate: ${formatMoney(avgRoomRate)} / night (active
+                  listings)
                 </p>
               </div>
               <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
@@ -599,13 +661,40 @@ export default function AdminDashboard() {
             <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
               <div className="border-b border-slate-100 px-5 py-4 sm:px-6">
                 <h2 className="text-lg font-bold">Room catalog</h2>
-                <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <p className="text-sm text-slate-500">
-                    {rooms.length} total · filter by name
+                    Archive hides listings from guests; purge only after
+                    archive.
                   </p>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setRoomCatalogView("active")}
+                      className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                        roomCatalogView === "active"
+                          ? "bg-teal-600 text-white shadow-sm"
+                          : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
+                      Active ({activeRoomCount})
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setRoomCatalogView("archived")}
+                      className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                        roomCatalogView === "archived"
+                          ? "bg-slate-800 text-white shadow-sm"
+                          : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
+                      Archived ({archivedRoomCount})
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-3">
                   <input
                     type="search"
-                    placeholder="Search rooms…"
+                    placeholder="Search in this tab…"
                     className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none ring-teal-500/20 focus:ring-2 sm:max-w-xs"
                     value={roomSearch}
                     onChange={(e) => setRoomSearch(e.target.value)}
@@ -634,7 +723,7 @@ export default function AdminDashboard() {
                         <td className="hidden px-4 py-3 text-slate-600 sm:table-cell">
                           {r.sqm}
                         </td>
-                        <td className="px-4 py-3 text-right">
+                        <td className="px-4 py-3 text-right whitespace-nowrap">
                           <button
                             type="button"
                             onClick={() => startEdit(r)}
@@ -642,13 +731,34 @@ export default function AdminDashboard() {
                           >
                             Edit
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => removeRoom(r.id)}
-                            className="text-rose-600 hover:underline"
-                          >
-                            Delete
-                          </button>
+                          {roomCatalogView === "active" ? (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                archiveRoomFromCatalog(r.id, r.title)
+                              }
+                              className="text-amber-700 hover:underline"
+                            >
+                              Archive
+                            </button>
+                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => restoreRoomToCatalog(r.id)}
+                                className="mr-2 text-teal-700 hover:underline"
+                              >
+                                Restore
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => permanentlyRemoveRoom(r)}
+                                className="text-rose-600 hover:underline"
+                              >
+                                Purge
+                              </button>
+                            </>
+                          )}
                         </td>
                       </tr>
                     ))}

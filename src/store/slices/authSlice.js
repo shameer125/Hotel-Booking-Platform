@@ -1,25 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-/** Demo accounts — persisted locally; not for production. */
-const seedUsers = [
-  {
-    id: "u_admin",
-    email: "admin@parador.com",
-    password: "admin123",
-    name: "Administrator",
-    role: "admin",
-  },
-  {
-    id: "u_demo",
-    email: "client@parador.com",
-    password: "client123",
-    name: "Demo Guest",
-    role: "client",
-  },
-];
+import { buildSeedUsers } from "../../config/authSeed";
 
 const initialState = {
-  users: seedUsers,
+  users: buildSeedUsers(),
   currentUser: null,
 };
 

@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import SectionTitleS2 from "../SectionTitleS2";
 import { useSelector } from "react-redux";
+import { selectPublicRooms } from "../../store/selectors/roomsSelectors";
 
 const Rooms = () => {
   const ClickHandler = () => {
     window.scrollTo(10, 0);
   };
 
-  const products = useSelector((state) => state.rooms.items);
+  const products = useSelector(selectPublicRooms);
 
   return (
     <div className="wpo-room-area section-padding">

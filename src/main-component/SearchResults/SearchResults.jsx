@@ -8,10 +8,11 @@ import Logo from "../../images/logo2.png";
 import Footer from "../../components/footer";
 
 import { addToCartIfAuthed } from "../../store/thunks/cartThunks";
+import { selectPublicRooms } from "../../store/selectors/roomsSelectors";
 
 const SearchResults = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.rooms.items);
+  const products = useSelector(selectPublicRooms);
 
   const addToCartProduct = (product, qty = 1) => {
     dispatch(addToCartIfAuthed({ ...product, qty }));

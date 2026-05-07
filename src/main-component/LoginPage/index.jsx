@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { attemptLogin } from "../../store/thunks/authThunks";
+import { isDemoLoginHintVisible } from "../../config/authSeed";
 
 import "./style.scss";
 
@@ -61,10 +62,12 @@ const LoginPage = () => {
           <div className="col-12 col-sm-8 col-md-6 col-lg-4 loginForm">
             <h2 className="text-center">Sign In</h2>
             <p className="text-center">Sign in to book rooms and manage stays</p>
-            <p className="text-center small text-muted mb-3">
-              Demo: client@parador.com / client123 · Admin: admin@parador.com /
-              admin123
-            </p>
+            {/* {isDemoLoginHintVisible() && (
+              <p className="text-center small text-muted mb-3">
+                Demo: client@parador.com / client123 · Admin: admin@parador.com
+                / admin123
+              </p>
+            )} */}
 
             <form onSubmit={submitForm}>
               <div className="row g-3">

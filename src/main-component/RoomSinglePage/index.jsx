@@ -7,11 +7,12 @@ import Footer from "../../components/footer";
 import Scrollbar from "../../components/scrollbar";
 import Logo from "../../images/logo2.png";
 import { addToCartIfAuthed } from "../../store/thunks/cartThunks";
+import { selectPublicRooms } from "../../store/selectors/roomsSelectors";
 
 const RoomSinglePage = () => {
   const { roomId } = useParams();
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.rooms.items);
+  const products = useSelector(selectPublicRooms);
   const product = useMemo(
     () => products.find((p) => String(p.id) === String(roomId)),
     [products, roomId]
