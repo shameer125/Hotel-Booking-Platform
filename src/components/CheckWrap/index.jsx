@@ -92,6 +92,7 @@ const CheckWrap = ({ onPaid, disabled }) => {
               <label htmlFor="card_number" className="form-label">
                 Card number
               </label>
+              
               <input
                 id="card_number"
                 className="form-control"
@@ -143,7 +144,8 @@ const CheckWrap = ({ onPaid, disabled }) => {
           <div className="col-12">
             <button
               type="submit"
-              className="cBtn cBtnLarge cBtnTheme mt-20 ml-15 btn border-0 w-100"
+              className="cBtn cBtnLarge cBtnTheme mt-20 ml-15
+              btn border-0 w-100"
               disabled={disabled}
             >
               Pay &amp; complete order
