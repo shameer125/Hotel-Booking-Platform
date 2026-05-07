@@ -32,8 +32,10 @@ const Destination2 = (props) => {
                                                     <li><i className="fa fa-star" aria-hidden="true"></i></li>
                                                     <li><i className="fa fa-star" aria-hidden="true"></i></li>
                                                     <li><i className="fa fa-star" aria-hidden="true"></i></li>
-                                                    <li><span><i className="fa fa-star" aria-hidden="true"></i></span></li>
+                                                    <li><span><i className="fa fa-star" aria-hidden="true"></i>
+                                                    </span></li>
                                                 </ul>
+                                                
                                                 <small>4.5</small>
                                             </div>
                                         </div>
