@@ -54,6 +54,7 @@ const ContactpageSec = () => {
                                 </div> 
                             </div>
                         </div>
+                        
                         <div className="wpo-contact-title">
                             <h2>Have Any Question?</h2>
                             <p>It is a long established fact that a reader will be distracted
@@ -72,7 +73,6 @@ const ContactpageSec = () => {
             </section>
         </section>
      )
-        
 }
 
 export default ContactpageSec;
