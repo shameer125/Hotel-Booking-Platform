@@ -126,14 +126,17 @@ const ContactForm = () => {
       </div>
 
       <div className="submit-area">
+
         <button type="submit" className="theme-btn">
           Submit Now
         </button>
+        
       </div>
 
       {successMsg && <p className="successMessage">{successMsg}</p>}
     </form>
   );
 };
+
 
 export default ContactForm;
