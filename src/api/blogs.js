@@ -7,8 +7,6 @@ import blogSingleImg1 from "../images/blog/img-4.jpg";
 import blogSingleImg2 from "../images/blog/img-5.jpg";
 import blogSingleImg3 from "../images/blog/img-6.jpg";
 
-
-
 const blogs = [
     {
         id: '1',
