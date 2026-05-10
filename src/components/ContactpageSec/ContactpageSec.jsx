@@ -1,7 +1,6 @@
 import React from 'react';
 import ContactForm from '../ContactFrom'
 
-
 const ContactpageSec = () => {
 
     return(
@@ -57,8 +56,8 @@ const ContactpageSec = () => {
                         
                         <div className="wpo-contact-title">
                             <h2>Have Any Question?</h2>
-                            <p>It is a long established fact that a reader will be distracted
-                                content of a page when looking.</p>
+                            <p>It is a long established fact that a reader will be
+                                distracted content of a page when looking.</p>
                         </div>
                         <div className="wpo-contact-form-area">
                             <ContactForm/>
