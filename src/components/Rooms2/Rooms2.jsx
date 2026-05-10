@@ -56,7 +56,9 @@ const Rooms2 = () => {
         </div>
       </div>
     </div>
+
   );
+  
 };
 
 export default Rooms2;
