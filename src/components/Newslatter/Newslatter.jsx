@@ -15,8 +15,8 @@ const Newslatter = (props) => {
                     <div className="col-xl-7">
                         <div className="wpo-section-title-s2">
                             <h2>Subscribe & Get Special Discount!</h2>
-                            <p>Don’t Wanna Miss Somethings? Subscribe Right Now And Get The Special
-                                Discount And Monthly Newsletter.</p>
+                            <p>Don’t Wanna Miss Somethings? Subscribe Right Now And Get The
+                                Special Discount And Monthly Newsletter.</p>
                         </div>
                     </div>
                 </div>
