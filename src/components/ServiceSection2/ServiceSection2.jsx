@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 
 const ServiceSection2 = (props) => {
+
     const ClickHandler = () => {
         window.scrollTo(10, 0);
     }
@@ -17,8 +18,8 @@ const ServiceSection2 = (props) => {
                         <div className="col-xl-4 col-lg-8 col-12">
                             <div className="wpo-service-content">
                                 <h2>We are Providing You Our Best Facilities </h2>
-                                <p>It is a long established fact that a reader will be distracted by the readable
-                                    content of a page when looking at its layout. </p>
+                                <p>It is a long established fact that a reader will be distracted by
+                                the readable content of a page when looking at its layout. </p>
                                 <a className="theme-btn" href="#">Discover More</a>
                             </div>
                         </div>
@@ -38,6 +39,8 @@ const ServiceSection2 = (props) => {
             </div>
         </div>
     )
+
 }
+
 
 export default ServiceSection2;
