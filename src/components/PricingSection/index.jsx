@@ -83,7 +83,9 @@ const PricingSection = (props) => {
                         ))}
                     </div>
                 </div>
+                
             </div>
+
         </section>
 
     )
