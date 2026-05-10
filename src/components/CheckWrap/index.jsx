@@ -155,6 +155,7 @@ const CheckWrap = ({ onPaid, disabled }) => {
       </form>
     </div>
   );
+  
 };
 
 export default CheckWrap;

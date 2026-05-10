@@ -13,7 +13,6 @@ import dSimg5 from '../images/destination-single/img-5.jpg'
 import dSimg6 from '../images/destination-single/img-6.jpg'
 
 
-
 const Destinations = [
     {
         id: '1',
