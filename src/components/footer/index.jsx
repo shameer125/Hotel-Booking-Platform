@@ -71,6 +71,7 @@ const Footer = (props) => {
                                     <li><Link onClick={ClickHandler} to="/pricing">Pricing Plan</Link></li>
                                 </ul>
                             </div>
+
                         </div>
 
                         <div className="col col-lg-3 col-md-6 col-sm-12 col-12">
@@ -80,8 +81,8 @@ const Footer = (props) => {
                                 </div>
                                 <div className="contact-ft">
                                     <ul>
-                                        <li><i className="fi flaticon-placeholder"></i>7 Green Lake Street Crawfordsville, IN
-                                            47933</li>
+                                        <li><i className="fi flaticon-placeholder"></i>7 Green Lake Street Crawfordsville,
+                                            IN 47933</li>
                                         <li><i className="fi flaticon-phone-call"></i>+1 800 123 456 789</li>
                                         <li><i className="fi flaticon-send"></i>parador@gmail.com</li>
                                     </ul>
