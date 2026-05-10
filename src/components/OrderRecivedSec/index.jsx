@@ -96,7 +96,9 @@ const OrderRecivedSec = ({ order }) => {
             </div>
           )}
         </div>
+
       </div>
+      
     </section>
   );
 };
