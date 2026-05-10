@@ -7,7 +7,6 @@ const SearchRooms = ({ products, addToCartProduct }) => {
     window.scrollTo(10, 0);
   };
 
-
   return (
     <div className="wpo-room-area section-padding">
       <div className="container">
@@ -51,7 +50,9 @@ const SearchRooms = ({ products, addToCartProduct }) => {
         </div>
       </div>
     </div>
+
   );
+  
 };
 
 export default SearchRooms;
