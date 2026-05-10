@@ -4,9 +4,7 @@ import Destinations from '../../api/destination'
 import SectionTitle from '../SectionTitle';
 
 
-
 const Destination = (props) => {
-
     const ClickHandler = () => {
         window.scrollTo(10, 0);
     }
